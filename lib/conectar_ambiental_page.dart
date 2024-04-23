@@ -13,42 +13,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Título da Página'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Adicione a navegação para a tela desejada aqui
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Adicione a navegação para a tela desejada aqui
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      appBar: customAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -97,70 +62,100 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Conectar',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+            Container(
+              color: Color(kCorBgCinza),
+              child: Padding(
+                padding: EdgeInsets.all(80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            'Conectar',
+                            style: TextStyle(
+                              color: Color(kCorPrimaria),
+                              fontSize: 62,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Ambiental',
+                          style: TextStyle(
+                            fontSize: 56,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Ambiental',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+                    const SizedBox(height: 20),
+                    const Text(
+                      kDescricaoPaginaPrincipal,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    descricaoPaginaPrincipa,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
+
+                  ],
+                ),
               ),
             ),
-
-            // Botão para entrar na tela
-            ElevatedButton(
-              onPressed: () {
-                // Adicione a navegação para a próxima tela aqui
-                Navigator.popAndPushNamed(context, '/conectar-ambiental');
-              },
-              child: Text('saiba mais'),
-            ), ],
+          ],
         ),
-      ),
-      bottomNavigationBar: MediaQuery.of(context).size.width < 600
-          ? null
-          : BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color: Colors.black),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search,color: Colors.black),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications,color: Colors.black),
-            label: 'Notifications',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person,color: Colors.black),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }
-}
 
+  PreferredSizeWidget customAppBar() {
+    return AppBar(
+      title: customLogo(),
+      centerTitle: true,
+      actions: [
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text('Inicio'),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text('Sobre'),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text('Serviços'),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget customLogo() {
+    return Row(
+      children: [
+        Image.asset(
+          'assets/LOGO_AMBIENTAL_FUNDO TRABSPARENTE_OP1.png',
+          // Caminho para a imagem do logo
+          height: 40, // Altura da imagem
+        ),
+        const SizedBox(width: 8), // Espaçamento entre a imagem e o título
+        const Text(
+          kTitle,
+          style: TextStyle(
+            color: Color(kCorPrimaria),
+            fontSize: 20, // Tamanho do texto
+            fontWeight: FontWeight.bold, // Negrito
+          ),
+        ),
+      ],
+    );
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:conectar_ambiental/conectar_ambiental_page.dart';
+import 'package:conectar_ambiental/constantes.dart';
 import 'package:conectar_ambiental/landing_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +13,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(kCorPrimaria)),
+        primaryColor: const Color(kCorPrimaria),
         useMaterial3: true,
       ),
       routes: {
-        '/' : (context) => LandingPage(),
-        '/conectar-ambiental' : (context)=> ConectarAmbientalPage(),
+        '/': (context) => LandingPage(),
+        '/conectar-ambiental': (context) => ConectarAmbientalPage(),
       },
     );
   }
