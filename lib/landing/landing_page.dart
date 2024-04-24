@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:conectar_ambiental/constantes.dart';
+import 'package:conectar_ambiental/landing/landing_presenter.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+  LandingPage({super.key});
+
+  late LandingPresenter presenter = LandingPresenter();
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -21,7 +25,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     // Define um temporizador para mostrar o título após 3 segundos
-    Timer(Duration(seconds: 1), () {
+    Timer(Duration(milliseconds: 100), () {
       setState(() {
         _showTitle = true;
         _opacity = 1.0;
@@ -34,9 +38,9 @@ class _LandingPageState extends State<LandingPage> {
     alturaCard = MediaQuery.of(context).size.height / 2;
     larguraCard = MediaQuery.of(context).size.width / 3;
     double _opacity = 0.0; // Inicializa a opacidade como 0
-    tamanhoFonte = MediaQuery.of(context).size.width / 16;
+    tamanhoFonte = MediaQuery.of(context).size.width / 10;
     tamanhoFonteLogo = MediaQuery.of(context).size.width / 64;
-
+    widget.presenter.setContext(context);
     return Scaffold(
       body: Container(
           decoration: const BoxDecoration(
@@ -52,7 +56,8 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(
+                          right: 8.0, top: 8.0, left: 50.0, bottom: 100),
                       child: Text(
                         'Visitar',
                         style: TextStyle(
@@ -70,15 +75,13 @@ class _LandingPageState extends State<LandingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     logo(
-                        path:
-                            'assets/LOGO_TRILHA_FUNDO TRANSPARENTE_COM TUCANO.png',
-                        title:
-                            ' serviços de consultoria ambiental, treinamentos, cursos e diagnósticos'),
+                        path: kPathLogoAmbiental,
+                        title: kDescricaoAmbiental,
+                        index: 1),
                     logo(
-                        path:
-                            'assets/LOGO_AMBIENTAL_FUNDO TRABSPARENTE_OP1.png',
-                        title:
-                            'serviços especializados em birding observatory, e receptivo turistico')
+                        path: kPathLogoGuaratuba,
+                        title: kDescricaoGuaratuba,
+                        index: 2)
                   ],
                 ),
               ],
@@ -87,21 +90,22 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget logo({required String title, required String path}) {
+  Widget logo(
+      {required String title, required String path, required int index}) {
     return Container(
       width: larguraCard,
       height: alturaCard,
       color: Colors.black45.withOpacity(0.5),
       // Define a cor de fundo com opacidade de 50%
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(2.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             // Imagem redonda do logo
             CircleAvatar(
-              radius: 100,
+              radius: 90,
               backgroundImage: AssetImage(path),
             ),
             SizedBox(height: 20),
@@ -109,14 +113,17 @@ class _LandingPageState extends State<LandingPage> {
 
             Center(
               child: AnimatedOpacity(
-                opacity: _opacity,
-                duration: const Duration(seconds: 1),
-                child: Padding(padding: const EdgeInsets.only(top:16,left: 16,right: 16,bottom: 16),child: Text(
-                  title,
-                  style:
-                  TextStyle(fontSize: tamanhoFonteLogo, color: Colors.white),
-                ),)
-              ),
+                  opacity: _opacity,
+                  duration: const Duration(seconds: 1),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 16, left: 16, right: 16, bottom: 16),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: tamanhoFonteLogo, color: Colors.white),
+                    ),
+                  )),
             ),
             // Mostra o título após alguns segundos
             const SizedBox(height: 20),
@@ -124,7 +131,7 @@ class _LandingPageState extends State<LandingPage> {
             ElevatedButton(
               onPressed: () {
                 // Adicione a navegação para a próxima tela aqui
-                Navigator.popAndPushNamed(context, '/conectar-ambiental');
+                widget.presenter.navigate(index);
               },
               child: Text('Entrar'),
             ),

@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:conectar_ambiental/IView.dart';
+import 'package:conectar_ambiental/ambiental/conectar_ambiental_presenter.dart';
 import 'package:conectar_ambiental/constantes.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +11,15 @@ class ConectarAmbientalPage extends StatefulWidget {
   State<ConectarAmbientalPage> createState() => _ConectarAmbientalPageState();
 }
 
-class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
+class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
+    with IView {
+  double kTamanhoLogo = 0;
+  var presenter = ConectarAmbientalPresenter();
+
   @override
   Widget build(BuildContext context) {
+    kTamanhoLogo = MediaQuery.of(context).size.height / 15;
+    presenter.setContext(context);
     return Scaffold(
       appBar: customAppBar(),
       body: SingleChildScrollView(
@@ -64,12 +72,12 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
             ),
             Container(
               color: Color(kCorBgCinza),
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.all(80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(right: 8.0),
@@ -82,24 +90,23 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                             ),
                           ),
                         ),
-                        Text(
-                          'Ambiental',
-                          style: TextStyle(
-                            fontSize: 56,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
+                    Text(
+                      'Ambiental',
+                      style: TextStyle(
+                        fontSize: 56,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
                       kDescricaoPaginaPrincipal,
                       style: TextStyle(
                         fontSize: 18,
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -112,7 +119,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
 
   PreferredSizeWidget customAppBar() {
     return AppBar(
-      title: customLogo(),
+      title: customLogo(tamanhoLogo: kTamanhoLogo),
       centerTitle: true,
       actions: [
         Center(
@@ -120,12 +127,10 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  presenter.navigateTo();
+                },
                 child: const Text('Inicio'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Sobre'),
               ),
               TextButton(
                 onPressed: () {},
@@ -138,13 +143,13 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
     );
   }
 
-  Widget customLogo() {
+  Widget customLogo({required double tamanhoLogo}) {
     return Row(
       children: [
         Image.asset(
           'assets/LOGO_AMBIENTAL_FUNDO TRABSPARENTE_OP1.png',
           // Caminho para a imagem do logo
-          height: 40, // Altura da imagem
+          height: tamanhoLogo, // Altura da imagem
         ),
         const SizedBox(width: 8), // Espaçamento entre a imagem e o título
         const Text(
@@ -157,5 +162,20 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
         ),
       ],
     );
+  }
+
+  @override
+  void setContext(BuildContext context) {
+    presenter.setContext(context);
+  }
+
+  @override
+  void defineState() {
+    // TODO: implement defineState
+  }
+
+  @override
+  IView getView() {
+    return this;
   }
 }
