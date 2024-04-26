@@ -36,6 +36,8 @@ flutter:
     - assets/tucano.png
     - assets/esquilo.png
     - assets/pica-pau.png
+    - assets/equipe.png
+    - assets/birdwatching.png
 
   fonts:
     - family: Pacifico

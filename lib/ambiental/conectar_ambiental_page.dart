@@ -14,11 +14,21 @@ class ConectarAmbientalPage extends StatefulWidget {
 class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
     with IView {
   double kTamanhoLogo = 0;
+  double kTitulo1Tamanho = 0;
+  double kTitulo2Tamanho = 0;
+  double kTitulo3Tamanho = 0;
+  double kImagemTamanho = 0;
+
   var presenter = ConectarAmbientalPresenter();
 
   @override
   Widget build(BuildContext context) {
     kTamanhoLogo = MediaQuery.of(context).size.height / 15;
+    kTitulo1Tamanho = MediaQuery.of(context).size.width / 8;
+    kTitulo2Tamanho = MediaQuery.of(context).size.width / 9;
+    kTitulo3Tamanho = MediaQuery.of(context).size.width / 20;
+    kImagemTamanho = MediaQuery.of(context).size.height / 2;
+
     presenter.setContext(context);
     return Scaffold(
       appBar: customAppBar(),
@@ -72,7 +82,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
             ),
             Container(
               color: Color(kCorBgCinza),
-              child: const Padding(
+              child: Padding(
                 padding: EdgeInsets.all(80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +95,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                             'Conectar',
                             style: TextStyle(
                               color: Color(kCorPrimaria),
-                              fontSize: 62,
+                              fontSize: kTitulo1Tamanho,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -95,18 +105,51 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                     Text(
                       'Ambiental',
                       style: TextStyle(
-                        fontSize: 56,
+                        fontSize: kTitulo2Tamanho,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       kDescricaoPaginaPrincipal,
                       style: TextStyle(
                         fontSize: 18,
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              color: Color(kCorBgCinza),
+              child: Padding(
+                padding: EdgeInsets.all(80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    Text(
+                      'Visão',
+                      style: TextStyle(
+                        fontSize: kTitulo3Tamanho,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+
+                    cardValoresEmpresa(path: kPathVisao, text: kDescricaoVisao),
+                    SizedBox(height: 20,),
+                    Text(
+                      'Missão',
+                      style: TextStyle(
+                        fontSize: kTitulo3Tamanho,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    cardValoresEmpresa(
+                        path: kPathEquipe, text: kDescricaoMissao)
                   ],
                 ),
               ),
@@ -119,8 +162,16 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
 
   PreferredSizeWidget customAppBar() {
     return AppBar(
-      title: customLogo(tamanhoLogo: kTamanhoLogo),
+      title: const Text(
+        kTitle,
+        style: TextStyle(
+          color: Color(kCorPrimaria),
+          fontSize: 20, // Tamanho do texto
+          fontWeight: FontWeight.bold, // Negrito
+        ),
+      ),
       centerTitle: true,
+      leading: customLogo(tamanhoLogo: kTamanhoLogo),
       actions: [
         Center(
           child: Row(
@@ -151,16 +202,41 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
           // Caminho para a imagem do logo
           height: tamanhoLogo, // Altura da imagem
         ),
-        const SizedBox(width: 8), // Espaçamento entre a imagem e o título
-        const Text(
-          kTitle,
-          style: TextStyle(
-            color: Color(kCorPrimaria),
-            fontSize: 20, // Tamanho do texto
-            fontWeight: FontWeight.bold, // Negrito
-          ),
-        ),
       ],
+    );
+  }
+
+  Widget cardValoresEmpresa({required String path, required String text}) {
+    return Card(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              height: kImagemTamanho,
+              width: kImagemTamanho,
+              margin: EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: AssetImage(path),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(64.0),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -17,8 +17,8 @@ class _LandingPageState extends State<LandingPage> {
   bool _showTitle = false;
   double alturaCard = 0;
   double larguraCard = 0;
-  double tamanhoFonte = 0;
-  double tamanhoFonteLogo = 0;
+  double tamanhoTitulo = 0;
+  double tamanhoSubtitulo = 0;
   double _opacity = 0;
 
   @override
@@ -38,8 +38,8 @@ class _LandingPageState extends State<LandingPage> {
     alturaCard = MediaQuery.of(context).size.height / 2;
     larguraCard = MediaQuery.of(context).size.width / 3;
     double _opacity = 0.0; // Inicializa a opacidade como 0
-    tamanhoFonte = MediaQuery.of(context).size.width / 10;
-    tamanhoFonteLogo = MediaQuery.of(context).size.width / 64;
+    tamanhoTitulo = MediaQuery.of(context).size.width / 10;
+    tamanhoSubtitulo = MediaQuery.of(context).size.width / 40;
     widget.presenter.setContext(context);
     return Scaffold(
       body: Container(
@@ -62,7 +62,7 @@ class _LandingPageState extends State<LandingPage> {
                         'Visitar',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: tamanhoFonte,
+                          fontSize: tamanhoTitulo,
                           fontFamily: 'Pacifico',
                           fontWeight: FontWeight.bold,
                         ),
@@ -121,7 +121,7 @@ class _LandingPageState extends State<LandingPage> {
                     child: Text(
                       title,
                       style: TextStyle(
-                          fontSize: tamanhoFonteLogo, color: Colors.white),
+                          fontSize: tamanhoSubtitulo, color: Colors.white),
                     ),
                   )),
             ),
