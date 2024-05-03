@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [],
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(kCorPrimaria)),
         primaryColor: const Color(kCorPrimaria),
         useMaterial3: true,
       ),

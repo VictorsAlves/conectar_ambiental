@@ -4,6 +4,10 @@ const kDescricaoAmbiental = 'consultoria ambiental, treinamentos, cursos e diagn
 const kDescricaoGuaratuba = 'birding observatory, e receptivo turistico';
 const kDescricaoMissao = 'Conectar soluções técnicas personalizadas e realmente funcionais aos diferentes empreendimentos promovendo a sustentabilidade, preservação e educação ambiental.';
 const kDescricaoVisao = 'A dedicação na qualidade do serviço e comprometimento com prazos é premissa para a entrega de um resultado.';
+const kEndereco = ' Brasil - SP - Bertioga';
+const kTelefone = '+55 (13) 99807-0740';
+const kEmail = 'conectartrilhadeguaratuba@gmail.com';
+
 
 //tema
 const kCorPrimaria = 0xff183248;

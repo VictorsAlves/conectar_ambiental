@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conectar_ambiental/IView.dart';
 import 'package:conectar_ambiental/ambiental/conectar_ambiental_presenter.dart';
 import 'package:conectar_ambiental/constantes.dart';
+import 'package:conectar_ambiental/footer/footer.dart';
 import 'package:flutter/material.dart';
 
 class ConectarAmbientalPage extends StatefulWidget {
@@ -24,8 +25,8 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
   @override
   Widget build(BuildContext context) {
     kTamanhoLogo = MediaQuery.of(context).size.height / 15;
-    kTitulo1Tamanho = MediaQuery.of(context).size.width / 8;
-    kTitulo2Tamanho = MediaQuery.of(context).size.width / 9;
+    kTitulo1Tamanho = MediaQuery.of(context).size.width / 12;
+    kTitulo2Tamanho = MediaQuery.of(context).size.width / 14;
     kTitulo3Tamanho = MediaQuery.of(context).size.width / 20;
     kImagemTamanho = MediaQuery.of(context).size.height / 2;
 
@@ -54,7 +55,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                     borderRadius: BorderRadius.circular(8.0),
                     image: const DecorationImage(
                       image: AssetImage('assets/esquilo.png'),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -83,34 +84,30 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
             Container(
               color: Color(kCorBgCinza),
               child: Padding(
-                padding: EdgeInsets.all(80),
+                padding: EdgeInsets.only(left: 80, right: 80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Text(
-                            'Conectar',
-                            style: TextStyle(
-                              color: Color(kCorPrimaria),
-                              fontSize: kTitulo1Tamanho,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        Text(
+                          'Conectar',
+                          style: TextStyle(
+                            color: Color(kCorPrimaria),
+                            fontSize: kTitulo1Tamanho,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          ' Ambiental',
+                          style: TextStyle(
+                            fontSize: kTitulo2Tamanho,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                       ],
                     ),
-                    Text(
-                      'Ambiental',
-                      style: TextStyle(
-                        fontSize: kTitulo2Tamanho,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
                     const Text(
                       kDescricaoPaginaPrincipal,
                       style: TextStyle(
@@ -137,9 +134,10 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                         color: Colors.black,
                       ),
                     ),
-
                     cardValoresEmpresa(path: kPathVisao, text: kDescricaoVisao),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
                       'Missão',
                       style: TextStyle(
@@ -154,6 +152,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                 ),
               ),
             ),
+            Footer()
           ],
         ),
       ),
@@ -207,35 +206,42 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
   }
 
   Widget cardValoresEmpresa({required String path, required String text}) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              height: kImagemTamanho,
-              width: kImagemTamanho,
-              margin: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                image: DecorationImage(
-                  image: AssetImage(path),
-                  fit: BoxFit.cover,
+    return Container(
+      height: 800,
+      width: 500,
+      child: Card(
+        margin: EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                height: kImagemTamanho,
+                width: kImagemTamanho,
+                margin: EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  image: DecorationImage(
+                    image: AssetImage(path),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(64.0),
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 18,
+            Padding(
+              padding: const EdgeInsets.all(64.0),
+              child: Text(
+                textAlign: TextAlign.left,
+                text,
+                style: const TextStyle(
+                  fontSize: 18,
+
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

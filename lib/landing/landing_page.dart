@@ -4,6 +4,8 @@ import 'package:conectar_ambiental/constantes.dart';
 import 'package:conectar_ambiental/landing/landing_presenter.dart';
 import 'package:flutter/material.dart';
 
+import '../footer/footer.dart';
+
 class LandingPage extends StatefulWidget {
   LandingPage({super.key});
 
@@ -35,13 +37,14 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    alturaCard = MediaQuery.of(context).size.height / 2;
+    alturaCard = MediaQuery.of(context).size.height / 1.8;
     larguraCard = MediaQuery.of(context).size.width / 3;
     double _opacity = 0.0; // Inicializa a opacidade como 0
     tamanhoTitulo = MediaQuery.of(context).size.width / 10;
     tamanhoSubtitulo = MediaQuery.of(context).size.width / 40;
     widget.presenter.setContext(context);
     return Scaffold(
+      bottomNavigationBar: Footer(),
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -55,34 +58,34 @@ class _LandingPageState extends State<LandingPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 8.0, top: 8.0, left: 50.0, bottom: 100),
-                      child: Text(
-                        'Visitar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: tamanhoTitulo,
-                          fontFamily: 'Pacifico',
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
+                    Text(
+                      'Visitar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: tamanhoTitulo,
+                        fontFamily: 'Pacifico',
+                        fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    logo(
-                        path: kPathLogoAmbiental,
-                        title: kDescricaoAmbiental,
-                        index: 1),
-                    logo(
-                        path: kPathLogoGuaratuba,
-                        title: kDescricaoGuaratuba,
-                        index: 2)
-                  ],
+                Container(
+                  height: 580,
+                  width: 500,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      logo(
+                          path: kPathLogoAmbiental,
+                          title: kDescricaoAmbiental,
+                          index: 1),
+                      logo(
+                          path: kPathLogoGuaratuba,
+                          title: kDescricaoGuaratuba,
+                          index: 2),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -108,9 +111,6 @@ class _LandingPageState extends State<LandingPage> {
               radius: 90,
               backgroundImage: AssetImage(path),
             ),
-            SizedBox(height: 20),
-            // Título descritivo
-
             Center(
               child: AnimatedOpacity(
                   opacity: _opacity,
@@ -125,8 +125,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   )),
             ),
-            // Mostra o título após alguns segundos
-            const SizedBox(height: 20),
+
             // Botão para entrar na tela
             ElevatedButton(
               onPressed: () {
