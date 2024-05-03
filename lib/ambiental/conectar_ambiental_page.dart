@@ -242,7 +242,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                 textAlign: TextAlign.left,
                 text,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
 
                 ),
               ),
