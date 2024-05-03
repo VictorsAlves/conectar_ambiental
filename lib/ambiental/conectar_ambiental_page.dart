@@ -19,16 +19,24 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
   double kTitulo2Tamanho = 0;
   double kTitulo3Tamanho = 0;
   double kImagemTamanho = 0;
+  double kcardValoresEmpresaAltura = 0;
+  double kcardValoresEmpresaLargura = 0;
 
   var presenter = ConectarAmbientalPresenter();
 
   @override
   Widget build(BuildContext context) {
-    kTamanhoLogo = MediaQuery.of(context).size.height / 15;
-    kTitulo1Tamanho = MediaQuery.of(context).size.width / 12;
-    kTitulo2Tamanho = MediaQuery.of(context).size.width / 14;
-    kTitulo3Tamanho = MediaQuery.of(context).size.width / 20;
-    kImagemTamanho = MediaQuery.of(context).size.height / 2;
+    var altura =  MediaQuery.of(context).size.height;
+    var largura =  MediaQuery.of(context).size.width;
+    kTamanhoLogo =altura / 15;
+    kTitulo1Tamanho = largura / 14;
+    kTitulo2Tamanho = largura / 16;
+    kTitulo3Tamanho = largura / 20;
+    kImagemTamanho = altura / 2.5;
+    kcardValoresEmpresaAltura = altura/1;
+    kcardValoresEmpresaLargura = largura/1.6;
+
+
 
     presenter.setContext(context);
     return Scaffold(
@@ -207,10 +215,9 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
 
   Widget cardValoresEmpresa({required String path, required String text}) {
     return Container(
-      height: 800,
-      width: 500,
+      height: kcardValoresEmpresaAltura,
+      width: kcardValoresEmpresaLargura,
       child: Card(
-        margin: EdgeInsets.all(12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

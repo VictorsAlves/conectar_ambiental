@@ -44,7 +44,6 @@ class _LandingPageState extends State<LandingPage> {
     tamanhoSubtitulo = MediaQuery.of(context).size.width / 40;
     widget.presenter.setContext(context);
     return Scaffold(
-      bottomNavigationBar: Footer(),
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -108,8 +107,9 @@ class _LandingPageState extends State<LandingPage> {
           children: <Widget>[
             // Imagem redonda do logo
             CircleAvatar(
-              radius: 90,
-              backgroundImage: AssetImage(path),
+              backgroundColor: Colors.white,
+              radius: 80,
+              foregroundImage: AssetImage(path),
             ),
             Center(
               child: AnimatedOpacity(
