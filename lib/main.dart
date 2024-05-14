@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LandingPage(),
         '/conectar-ambiental': (context) => const ConectarAmbientalPage(),
-        '/agendamento': (context) => Agendamento(),
-        '/trilha-guaratuba': (context) => TrilhaGuaratubalPage()
+        '/agendamento': (context) => const Agendamento(),
+        '/trilha-guaratuba': (context) => const TrilhaGuaratubalPage()
       },
     );
   }

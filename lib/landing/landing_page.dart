@@ -4,7 +4,6 @@ import 'package:conectar_ambiental/constantes.dart';
 import 'package:conectar_ambiental/landing/landing_presenter.dart';
 import 'package:flutter/material.dart';
 
-import '../footer/footer.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({super.key});
@@ -27,7 +26,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     // Define um temporizador para mostrar o título após 3 segundos
-    Timer(Duration(milliseconds: 100), () {
+    Timer(const Duration(milliseconds: 100), () {
       setState(() {
         _showTitle = true;
         _opacity = 1.0;
@@ -39,7 +38,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     alturaCard = MediaQuery.of(context).size.height / 1.8;
     larguraCard = MediaQuery.of(context).size.width / 3;
-    double _opacity = 0.0; // Inicializa a opacidade como 0
+    double opacity = 0.0; // Inicializa a opacidade como 0
     tamanhoTitulo = MediaQuery.of(context).size.width / 10;
     tamanhoSubtitulo = MediaQuery.of(context).size.width / 40;
     widget.presenter.setContext(context);
@@ -69,7 +68,7 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 580,
                   width: 500,
                   child: Row(
@@ -132,7 +131,7 @@ class _LandingPageState extends State<LandingPage> {
                 // Adicione a navegação para a próxima tela aqui
                 widget.presenter.navigate(index);
               },
-              child: Text('Entrar'),
+              child: const Text('Entrar'),
             ),
           ],
         ),

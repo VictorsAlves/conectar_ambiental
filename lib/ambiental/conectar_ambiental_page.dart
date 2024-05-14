@@ -58,17 +58,17 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
               ),
               items: [
                 Container(
-                  margin: EdgeInsets.all(5.0),
+                  margin: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: const DecorationImage(
                       image: AssetImage('assets/esquilo.png'),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(5.0),
+                  margin: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: const DecorationImage(
@@ -78,7 +78,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(5.0),
+                  margin: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: const DecorationImage(
@@ -90,9 +90,9 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
               ],
             ),
             Container(
-              color: Color(kCorBgCinza),
+              color: const Color(kCorBgCinza),
               child: Padding(
-                padding: EdgeInsets.only(left: 80, right: 80),
+                padding: const EdgeInsets.only(left: 80, right: 80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -101,7 +101,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                         Text(
                           'Conectar',
                           style: TextStyle(
-                            color: Color(kCorPrimaria),
+                            color: const Color(kCorPrimaria),
                             fontSize: kTitulo1Tamanho,
                             fontWeight: FontWeight.bold,
                           ),
@@ -127,9 +127,9 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
               ),
             ),
             Container(
-              color: Color(kCorBgCinza),
+              color: const Color(kCorBgCinza),
               child: Padding(
-                padding: EdgeInsets.all(80),
+                padding: const EdgeInsets.all(80),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -143,7 +143,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                       ),
                     ),
                     cardValoresEmpresa(path: kPathVisao, text: kDescricaoVisao),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -160,7 +160,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
                 ),
               ),
             ),
-            Footer()
+            const Footer()
           ],
         ),
       ),
@@ -214,7 +214,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
   }
 
   Widget cardValoresEmpresa({required String path, required String text}) {
-    return Container(
+    return SizedBox(
       height: kcardValoresEmpresaAltura,
       width: kcardValoresEmpresaLargura,
       child: Card(
@@ -226,7 +226,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
               child: Container(
                 height: kImagemTamanho,
                 width: kImagemTamanho,
-                margin: EdgeInsets.all(5.0),
+                margin: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   image: DecorationImage(

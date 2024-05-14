@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conectar_ambiental/constantes.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class _TrilhaGuaratubaPageState extends State<TrilhaGuaratubalPage> {
     kTamanhoLogo = MediaQuery.of(context).size.height / 20;
     return Scaffold(
       appBar: customAppBar(),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [Text('trilha guaratuba')],

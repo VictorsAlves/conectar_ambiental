@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 class Agendamento extends StatefulWidget {
+  const Agendamento({super.key});
+
   @override
   _VisitScheduleScreenState createState() => _VisitScheduleScreenState();
 }
@@ -18,7 +20,7 @@ class _VisitScheduleScreenState extends State<Agendamento> with IView {
     presenter.setContext(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agendamento de Visita'),
+        title: const Text('Agendamento de Visita'),
       ),
       body: Center(
         child: Column(
@@ -27,9 +29,9 @@ class _VisitScheduleScreenState extends State<Agendamento> with IView {
             presenter.getForm(),
             ElevatedButton(
               onPressed: () => presenter.generatePDF(),
-              child: Text('Gerar PDF de Agendamento'),
+              child: const Text('Gerar PDF de Agendamento'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             if (pdfPath.isNotEmpty)
               Expanded(
                 child: PDFView(

@@ -1,6 +1,4 @@
-import 'package:conectar_ambiental/constantes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -18,11 +16,11 @@ class _FooterState extends State<Footer> {
   Widget rodape() {
     return BottomAppBar(
       color: Colors.white,
-      child: Container(
+      child: SizedBox(
         height: 50.0,
         child: Center(
           child: RichText(
-            text: TextSpan(
+            text: const TextSpan(
               style: TextStyle(color: Colors.black),
               children: [
                 TextSpan(
