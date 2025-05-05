@@ -16,15 +16,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   cupertino_icons: ^1.0.2
-  carousel_slider: ^4.2.1
   flutter_social_button: ^1.1.4+1
-  flutter_pdfview: ^1.3.2
-  pdf: ^3.6.0
   flutter_form_builder: ^9.2.1
   animations: ^2.0.0
+
 
 
 dev_dependencies:
@@ -39,7 +35,7 @@ flutter:
 
   assets:
     - assets/LOGO_TRILHA_FUNDO TRANSPARENTE_COM TUCANO.png
-    - assets/LOGO_AMBIENTAL_FUNDO TRABSPARENTE_OP1.png
+    - assets/logo-conectar-ambiental.png
     - assets/tucano.png
     - assets/esquilo.png
     - assets/pica-pau.png

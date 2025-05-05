@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:conectar_ambiental/constantes.dart';
 import 'package:conectar_ambiental/landing/landing_presenter.dart';
 import 'package:flutter/material.dart';
-
 
 class LandingPage extends StatefulWidget {
   LandingPage({super.key});
@@ -25,7 +23,6 @@ class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
     super.initState();
-    // Define um temporizador para mostrar o título após 3 segundos
     Timer(const Duration(milliseconds: 100), () {
       setState(() {
         _showTitle = true;
@@ -38,100 +35,127 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     alturaCard = MediaQuery.of(context).size.height / 1.8;
     larguraCard = MediaQuery.of(context).size.width / 3;
-    double opacity = 0.0; // Inicializa a opacidade como 0
     tamanhoTitulo = MediaQuery.of(context).size.width / 10;
     tamanhoSubtitulo = MediaQuery.of(context).size.width / 40;
     widget.presenter.setContext(context);
+
     return Scaffold(
       body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/tucano.png'),
-              fit: BoxFit.cover,
-            ),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/tucano.png'),
+            fit: BoxFit.cover,
           ),
-          child: Center(
-            child: ListView(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+        ),
+        child: Center(
+          child: ListView(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Visitar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: tamanhoTitulo,
+                      fontFamily: 'Pacifico',
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 580,
+                width: 500,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      'Visitar',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: tamanhoTitulo,
-                        fontFamily: 'Pacifico',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+                    logo(
+                      path: kPathLogoAmbiental,
+                      title: kDescricaoAmbiental,
+                      index: 1,
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 580,
-                  width: 500,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      logo(
-                          path: kPathLogoAmbiental,
-                          title: kDescricaoAmbiental,
-                          index: 1),
-                      logo(
-                          path: kPathLogoGuaratuba,
-                          title: kDescricaoGuaratuba,
-                          index: 2),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  Widget logo(
-      {required String title, required String path, required int index}) {
+  Widget logo({required String title, required String path, required int index}) {
     return Container(
       width: larguraCard,
       height: alturaCard,
-      color: Colors.black45.withOpacity(0.5),
-      // Define a cor de fundo com opacidade de 50%
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(0, 0, 0, 0.5),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            // Imagem redonda do logo
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: 80,
-              foregroundImage: AssetImage(path),
-            ),
-            Center(
-              child: AnimatedOpacity(
-                  opacity: _opacity,
-                  duration: const Duration(seconds: 1),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 16, left: 16, right: 16, bottom: 16),
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: tamanhoSubtitulo, color: Colors.white),
-                    ),
-                  )),
+            // Container para o logo - Versão otimizada
+            Container(
+              width: 160,
+              height: 160,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  child: Image.asset(
+                    path,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
 
-            // Botão para entrar na tela
+            AnimatedOpacity(
+              opacity: _opacity,
+              duration: const Duration(seconds: 1),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: tamanhoSubtitulo,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+
             ElevatedButton(
-              onPressed: () {
-                // Adicione a navegação para a próxima tela aqui
-                widget.presenter.navigate(index);
-              },
-              child: const Text('Entrar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () => widget.presenter.navigate(index),
+              child: const Text(
+                'Entrar',
+                style: TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),

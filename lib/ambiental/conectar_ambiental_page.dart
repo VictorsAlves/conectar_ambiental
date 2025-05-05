@@ -1,9 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:conectar_ambiental/IView.dart';
-import 'package:conectar_ambiental/ambiental/conectar_ambiental_presenter.dart';
-import 'package:conectar_ambiental/constantes.dart';
-import 'package:conectar_ambiental/footer/footer.dart';
 import 'package:flutter/material.dart';
+import 'package:conectar_ambiental/constantes.dart';
+import 'package:conectar_ambiental/ambiental/conectar_ambiental_presenter.dart';
+
+import '../footer/footer.dart';
 
 class ConectarAmbientalPage extends StatefulWidget {
   const ConectarAmbientalPage({super.key});
@@ -12,259 +11,373 @@ class ConectarAmbientalPage extends StatefulWidget {
   State<ConectarAmbientalPage> createState() => _ConectarAmbientalPageState();
 }
 
-class _ConectarAmbientalPageState extends State<ConectarAmbientalPage>
-    with IView {
-  double kTamanhoLogo = 0;
-  double kTitulo1Tamanho = 0;
-  double kTitulo2Tamanho = 0;
-  double kTitulo3Tamanho = 0;
-  double kImagemTamanho = 0;
-  double kcardValoresEmpresaAltura = 0;
-  double kcardValoresEmpresaLargura = 0;
+class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
+  final presenter = ConectarAmbientalPresenter();
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
 
-  var presenter = ConectarAmbientalPresenter();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    setState(() {
+      _isScrolled = _scrollController.offset > 50;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var altura =  MediaQuery.of(context).size.height;
-    var largura =  MediaQuery.of(context).size.width;
-    kTamanhoLogo =altura / 15;
-    kTitulo1Tamanho = largura / 14;
-    kTitulo2Tamanho = largura / 16;
-    kTitulo3Tamanho = largura / 20;
-    kImagemTamanho = altura / 2.5;
-    kcardValoresEmpresaAltura = altura/1;
-    kcardValoresEmpresaLargura = largura/1.6;
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
 
-
-
-    presenter.setContext(context);
     return Scaffold(
-      appBar: customAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 400,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                viewportFraction: 0.8,
+      extendBodyBehindAppBar: true,
+      appBar: _buildAppBar(theme, size),
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          // Banner Hero
+          SliverToBoxAdapter(
+            child: Container(
+              height: size.height * 0.7,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: const AssetImage('assets/banner_ambiental.jpg'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.3),
+                    BlendMode.darken,
+                  ),
+                ),
               ),
-              items: [
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/esquilo.png'),
-                      fit: BoxFit.contain,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 10),
+                    Text(
+                      'Soluções Sustentáveis\npara um Futuro Verde',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Seção de Serviços
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.1, vertical: 40),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: size.width > 800 ? 3 : 2,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+                childAspectRatio: 0.8,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _buildServiceCard(index, theme),
+                childCount: 6,
+              ),
+            ),
+          ),
+
+          // Seção Sobre Nós
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.1, vertical: 60),
+              color: Colors.grey[50],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Nossa História',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      color: theme.primaryColor,
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              kDescricaoPaginaPrincipal,
+                              style: theme.textTheme.bodyLarge,
+                            ),
+                            const SizedBox(height: 30),
+                            _buildMissionVisionCard(
+                              'Missão',
+                              kDescricaoMissao,
+                              theme,
+                            ),
+                            const SizedBox(height: 20),
+                            _buildMissionVisionCard(
+                              'Visão',
+                              kDescricaoVisao,
+                              theme,
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (size.width > 800)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              kPathEquipe,
+                              width: 400,
+                              height: 400,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Seção de Publicações
+          SliverToBoxAdapter(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.1, vertical: 60),
+              child: Column(
+                children: [
+                  Text(
+                    'Últimas Publicações',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      color: theme.primaryColor,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  _buildPublicationsSlider(size),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => presenter.navigateTo(),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text('Ver Todas as Publicações'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Rodapé
+          const SliverToBoxAdapter(
+            child: Footer(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(ThemeData theme, Size size) {
+    return AppBar(
+      backgroundColor: _isScrolled
+          ? theme.primaryColor.withOpacity(0.9)
+          : Colors.transparent,
+      elevation: _isScrolled ? 4 : 0,
+      title: Image.asset(
+        kPathLogoAmbiental,
+        height: 40,
+      ),
+      centerTitle: true,
+      actions: [
+        if (size.width > 600)
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text('Início'),
+              ),
+              TextButton(
+                onPressed: () => _scrollController.animateTo(
+                  MediaQuery.of(context).size.height * 0.7,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
                 ),
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/tucano.png'),
+                child: const Text('Serviços'),
+              ),
+              TextButton(
+                onPressed: () => _scrollController.animateTo(
+                  MediaQuery.of(context).size.height * 1.8,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                ),
+                child: const Text('Sobre Nós'),
+              ),
+              TextButton(
+                onPressed: () => presenter.navigateTo(),
+                child: const Text('Publicações'),
+              ),
+              const SizedBox(width: 20),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget _buildServiceCard(int index, ThemeData theme) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              services[index].icon,
+              size: 50,
+              color: theme.primaryColor,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              services[index].title,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleLarge,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Saiba mais sobre nossos serviços especializados nesta área',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMissionVisionCard(String title, String text, ThemeData theme) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: theme.primaryColor,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              text,
+              style: theme.textTheme.bodyLarge,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPublicationsSlider(Size size) {
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Container(
+            width: size.width * 0.8,
+            margin: const EdgeInsets.only(right: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.grey[100],
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.horizontal(
+                      left: Radius.circular(12),
+                    ),
+                    child: Image.asset(
+                      'assets/publicacao_${index + 1}.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/pica-pau.png'),
-                      fit: BoxFit.cover,
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Título da Publicação ${index + 1}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Resumo da publicação com os principais pontos abordados no artigo técnico ou notícia ambiental...',
+                        ),
+                        const SizedBox(height: 20),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Ler Mais'),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
-            Container(
-              color: const Color(kCorBgCinza),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Conectar',
-                          style: TextStyle(
-                            color: const Color(kCorPrimaria),
-                            fontSize: kTitulo1Tamanho,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          ' Ambiental',
-                          style: TextStyle(
-                            fontSize: kTitulo2Tamanho,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Text(
-                      kDescricaoPaginaPrincipal,
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              color: const Color(kCorBgCinza),
-              child: Padding(
-                padding: const EdgeInsets.all(80),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 20),
-                    Text(
-                      'Visão',
-                      style: TextStyle(
-                        fontSize: kTitulo3Tamanho,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    cardValoresEmpresa(path: kPathVisao, text: kDescricaoVisao),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Missão',
-                      style: TextStyle(
-                        fontSize: kTitulo3Tamanho,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    cardValoresEmpresa(
-                        path: kPathEquipe, text: kDescricaoMissao)
-                  ],
-                ),
-              ),
-            ),
-            const Footer()
-          ],
-        ),
+          );
+        },
       ),
     );
-  }
-
-  PreferredSizeWidget customAppBar() {
-    return AppBar(
-      title: const Text(
-        kTitle,
-        style: TextStyle(
-          color: Color(kCorPrimaria),
-          fontSize: 20, // Tamanho do texto
-          fontWeight: FontWeight.bold, // Negrito
-        ),
-      ),
-      centerTitle: true,
-      leading: customLogo(tamanhoLogo: kTamanhoLogo),
-      actions: [
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  presenter.navigateTo();
-                },
-                child: const Text('Inicio'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Serviços'),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget customLogo({required double tamanhoLogo}) {
-    return Row(
-      children: [
-        Image.asset(
-          'assets/LOGO_AMBIENTAL_FUNDO TRABSPARENTE_OP1.png',
-          // Caminho para a imagem do logo
-          height: tamanhoLogo, // Altura da imagem
-        ),
-      ],
-    );
-  }
-
-  Widget cardValoresEmpresa({required String path, required String text}) {
-    return SizedBox(
-      height: kcardValoresEmpresaAltura,
-      width: kcardValoresEmpresaLargura,
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                height: kImagemTamanho,
-                width: kImagemTamanho,
-                margin: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: DecorationImage(
-                    image: AssetImage(path),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(64.0),
-              child: Text(
-                textAlign: TextAlign.left,
-                text,
-                style: const TextStyle(
-                  fontSize: 16,
-
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  void setContext(BuildContext context) {
-    presenter.setContext(context);
-  }
-
-  @override
-  void defineState() {
-    // TODO: implement defineState
-  }
-
-  @override
-  IView getView() {
-    return this;
   }
 }
+
+class Service {
+  final String title;
+  final IconData icon;
+
+  const Service(this.title, this.icon);
+}
+
+final List<Service> services = [
+  Service('Licenciamento Ambiental', Icons.assignment_turned_in),
+  Service('Recuperação de Áreas', Icons.nature),
+  Service('Educação Ambiental', Icons.school),
+  Service('Laudos Técnicos', Icons.assessment),
+  Service('Resgate de Fauna', Icons.pets),
+  Service('Consultoria Personalizada', Icons.people),
+];
