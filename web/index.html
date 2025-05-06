@@ -18,42 +18,54 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
 
   <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="conectar_ambiental">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="keywords"
+        content="Consultoria, consultoria ambiental, treinamento, curso, recuperação vegetal, recuperação florestal, recuperação de áreas degradadas, diagnósticos, laudos ambientais, licenciamento, consultoria ambiental na baixada santista, consultoria ambiental no estado de sao paulo, meliponicultura, meliponicultor, resgate de abelhas nativas, resgate de animais, manejo de animais, educação ambiental ">
+  <meta name="description" content="Conectar Ambiental - Consultoria Ambiental Especializada | Bertioga e Região
+Somos uma renomada consultoria ambiental em Bertioga, atendendo toda a região com soluções abrangentes. Oferecemos serviços de consultoria ambiental, treinamentos, cursos e diagnósticos, com foco em recuperação vegetal, recuperação de áreas degradadas e laudos ambientais. Nossa equipe de consultores altamente qualificados está comprometida em fornecer soluções personalizadas e eficazes para atender às necessidades ambientais de nossos clientes.
+Com vasta experiência em licenciamento ambiental e expertise em consultoria ambiental, ajudamos empresas e empreendimentos a alcançar a conformidade com as regulamentações ambientais e adotar práticas sustentáveis. Nosso compromisso com a preservação do meio ambiente se estende à região de Bertioga, contribuindo para a conservação da rica biodiversidade local.
+Além disso, oferecemos serviços especializados em birding observatory, manejo de animais e projetos de educação ambiental. Nosso objetivo é promover a conscientização e ações positivas em relação ao meio ambiente, visando um futuro mais sustentável.
+Conte com a Conectar Ambiental para obter soluções confiáveis e eficientes em consultoria ambiental em Bertioga e região. Entre em contato conosco para saber mais e iniciar uma parceria para preservar e valorizar nosso ambiente.">
+  <meta name="author" content="conectar ambiental">
+
+
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <title>conectar_ambiental</title>
   <link rel="manifest" href="manifest.json">
-
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
 </head>
 <body>
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
+  <script src="flutter_bootstrap.js" async></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6kdkU_CztPUeTWpgZNbmTrs1j_M5Yuks",
+      authDomain: "conectar-ambiental.firebaseapp.com",
+      projectId: "conectar-ambiental",
+      storageBucket: "conectar-ambiental.appspot.com",
+      messagingSenderId: "1018260374411",
+      appId: "1:1018260374411:web:7e12a9a90ea03299f2258e",
+      measurementId: "G-R39L13EF63"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
   </script>
   <script type="module">
   // Import the functions you need from the SDKs you need
