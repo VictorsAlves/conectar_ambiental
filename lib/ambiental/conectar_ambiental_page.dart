@@ -45,10 +45,10 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
               height: size.height * 0.7,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assets/banner_ambiental.jpg'),
+                  image: const AssetImage(kTucanoImg),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.3),
+                    Colors.black.withAlpha(3),
                     BlendMode.darken,
                   ),
                 ),
@@ -62,7 +62,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                       'Soluções Sustentáveis\npara um Futuro Verde',
                       textAlign: TextAlign.center,
                       style: theme.textTheme.headlineMedium?.copyWith(
-                        color: Colors.blueAccent,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -195,13 +195,12 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
 
   PreferredSizeWidget _buildAppBar(ThemeData theme, Size size) {
     return AppBar(
-      backgroundColor: _isScrolled
-          ? theme.primaryColor.withOpacity(0.9)
-          : Colors.transparent,
+      backgroundColor:
+          _isScrolled ? theme.primaryColor : Colors.transparent,
       elevation: _isScrolled ? 4 : 0,
       title: Image.asset(
-        kPathLogoAmbiental,
-        height: 40,
+        _isScrolled ? kPathLogoAmbientalBranco : kPathLogoAmbiental,
+        height: 50,
       ),
       centerTitle: true,
       actions: [
@@ -210,7 +209,14 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
             children: [
               TextButton(
                 onPressed: () {},
-                child: const Text('Início'),
+                child:  Text(
+                  'Início',
+                  style: _isScrolled
+                      ?  TextStyle(
+                          color: theme.secondaryHeaderColor, fontWeight: FontWeight.bold)
+                      : const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
               TextButton(
                 onPressed: () => _scrollController.animateTo(
@@ -218,7 +224,11 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOut,
                 ),
-                child: const Text('Serviços'),
+                child:  Text('Serviços',style: _isScrolled
+                    ?  TextStyle(
+                    color: theme.secondaryHeaderColor, fontWeight: FontWeight.bold)
+                    : const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),),
               ),
               TextButton(
                 onPressed: () => _scrollController.animateTo(
@@ -226,11 +236,19 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOut,
                 ),
-                child: const Text('Sobre Nós'),
+                child:  Text('Sobre Nós', style: _isScrolled
+                    ?  TextStyle(
+                    color: theme.secondaryHeaderColor, fontWeight: FontWeight.bold)
+                    : const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),),
               ),
               TextButton(
                 onPressed: () => presenter.navigateTo(),
-                child: const Text('Publicações'),
+                child:  Text('Publicações', style: _isScrolled
+                    ?  TextStyle(
+                    color: theme.secondaryHeaderColor, fontWeight: FontWeight.bold)
+                    : const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),),
               ),
               const SizedBox(width: 20),
             ],
@@ -324,7 +342,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                       left: Radius.circular(12),
                     ),
                     child: Image.asset(
-                      'assets/publicacao_${index + 1}.jpg',
+                      kEsquiloImg,
                       fit: BoxFit.cover,
                     ),
                   ),

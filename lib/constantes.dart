@@ -16,6 +16,9 @@ const kCorBgCinza = 0xffebebea;
 //assets
 const kPathLogoGuaratuba = 'assets/LOGO_TRILHA_FUNDO TRANSPARENTE_COM TUCANO.png';
 const kPathLogoAmbiental = 'assets/logo-conectar-ambiental.png';
+const kPathLogoAmbientalBranco = 'assets/logo-conectar-ambiental-branco.png';
 const kPathEquipe = 'assets/equipe.png';
+const kTucanoImg = 'assets/tucano.png';
+const kEsquiloImg = 'assets/esquilo.png';
 
 const kPathVisao = 'assets/birdwatching.png';
