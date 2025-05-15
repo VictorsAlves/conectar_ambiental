@@ -32,6 +32,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    presenter.setContext(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -368,7 +369,9 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                         ),
                         const SizedBox(height: 20),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            presenter.navigateToPost();
+                          },
                           child: const Text('Ler Mais'),
                         ),
                       ],
