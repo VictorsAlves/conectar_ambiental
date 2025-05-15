@@ -32,6 +32,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    presenter.setContext(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -169,7 +170,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                   _buildPublicationsSlider(size),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () => presenter.navigateTo(),
+                    onPressed: () => presenter.navigateToPost(),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32, vertical: 16),
@@ -243,7 +244,7 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                     color: Colors.white, fontWeight: FontWeight.bold),),
               ),
               TextButton(
-                onPressed: () => presenter.navigateTo(),
+                onPressed: () => presenter.navigateToPost(),
                 child:  Text('Publicações', style: _isScrolled
                     ?  TextStyle(
                     color: theme.secondaryHeaderColor, fontWeight: FontWeight.bold)
@@ -368,7 +369,9 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                         ),
                         const SizedBox(height: 20),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            presenter.navigateToPost();
+                          },
                           child: const Text('Ler Mais'),
                         ),
                       ],

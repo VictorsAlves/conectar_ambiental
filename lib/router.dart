@@ -14,6 +14,10 @@ class ConectarAmbientalRouter {
     Navigator.of(context).pushNamed('/');
   }
 
+  void goToPost() {
+    Navigator.of(context).pushNamed('/conteudos');
+  }
+
   void goToGuaratuba() {
     Navigator.of(context).pushNamed('/trilha-guaratuba');
   }

@@ -42,6 +42,7 @@ flutter:
     - assets/pica-pau.png
     - assets/equipe.png
     - assets/birdwatching.png
+    - assets/conteudos_biologar.json
 
   fonts:
     - family: Pacifico

@@ -15,4 +15,7 @@ class ConectarAmbientalPresenter {
   void navigateTo() {
     router.goToInicio();
   }
+  void navigateToPost() {
+    router.goToPost();
+  }
 }
