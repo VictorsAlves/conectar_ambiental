@@ -1,6 +1,7 @@
 import 'package:conectar_ambiental/ambiental/conectar_ambiental_page.dart';
 import 'package:conectar_ambiental/constantes.dart';
-import 'package:conectar_ambiental/landing/landing_page.dart';
+import 'package:conectar_ambiental/escrita/escrever_artigo_page.dart';
+import 'package:conectar_ambiental/postagem/novomodelo/editor_completo_page.dart' show EditorCompletoPage, RichTextEditorPage;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -27,9 +28,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (context) => LandingPage(),
-        '/conectar-ambiental': (context) => const ConectarAmbientalPage(),
-        '/conteudos': (context) => const ConteudoPage()
+        '/': (context) => const ConectarAmbientalPage(),
+        '/editor': (context) => const EditorCompletoPage(),
+        '/conteudos': (context) =>  ConteudoPage(),
+        '/escrever-artigo': (context) =>  EscreverArtigoPage(),
       },
     );
   }

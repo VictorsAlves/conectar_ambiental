@@ -1,4 +1,4 @@
-import 'package:conectar_ambiental/IView.dart';
+import 'package:conectar_ambiental/interface_view.dart';
 import 'package:conectar_ambiental/router.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,5 +17,9 @@ class ConectarAmbientalPresenter {
   }
   void navigateToPost() {
     router.goToPost();
+  }
+
+  void navigateToCreatePost() {
+    router.goToEditarPage();
   }
 }

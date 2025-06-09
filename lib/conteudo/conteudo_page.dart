@@ -1,10 +1,10 @@
-import 'dart:convert';
+import 'package:conectar_ambiental/conteudo/conteudo_presenter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'artigo_model.dart';
 
 class ConteudoPage extends StatefulWidget {
-  const ConteudoPage({super.key});
+   ConteudoPage({super.key});
+  final ConteudoPresenter presenter = ConteudoPresenter();
 
   @override
   State<ConteudoPage> createState() => _ConteudoPageState();
@@ -16,6 +16,8 @@ class _ConteudoPageState extends State<ConteudoPage> {
   int paginaAtual = 0;
   String termoBusca = '';
 
+
+
   @override
   void initState() {
     super.initState();
@@ -23,11 +25,10 @@ class _ConteudoPageState extends State<ConteudoPage> {
   }
 
   Future<void> carregarJson() async {
-    final String resposta = await rootBundle.loadString('assets/conteudos_biologar.json');
-    final data = json.decode(resposta);
+
+    final data = await widget.presenter.buscarListaConteudo();
     setState(() {
-      artigos = List<Artigo>.from(data.map((e) => Artigo.fromJson(e)));
-      artigosFiltrados = List.from(artigos);
+      artigosFiltrados = List.from(data);
     });
   }
 
@@ -62,6 +63,7 @@ class _ConteudoPageState extends State<ConteudoPage> {
 
   @override
   Widget build(BuildContext context) {
+    widget.presenter.setContext(context);
     if (artigosFiltrados.isEmpty) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
