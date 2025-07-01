@@ -61,17 +61,22 @@ class _EditorCompletoPageState extends State<EditorCompletoPage> {
     );
   }
 
-  List<InlineSpan> parseTextoFormatado(String texto) {
-    final spans = <InlineSpan>[];
+  /// Retorna uma lista de Widgets, em vez de InlineSpans
+  List<Widget> parseTextoFormatado(String texto) {
+    final widgets = <Widget>[];
     final regex = RegExp(
-        r'<(b|i|h1)>(.*?)<\/\1>|<img align="(.*?)">(.*?)<\/img>',
-        dotAll: true);
+      r'<(b|i|h1)>(.*?)<\/\1>|<img align="(.*?)">(.*?)<\/img>',
+      dotAll: true,
+    );
     final matches = regex.allMatches(texto);
 
     int cursor = 0;
     for (final match in matches) {
       if (match.start > cursor) {
-        spans.add(TextSpan(text: texto.substring(cursor, match.start)));
+        widgets.add(
+          Text(texto.substring(cursor, match.start),
+              style: const TextStyle(fontSize: 16)),
+        );
       }
 
       if (match.group(1) != null) {
@@ -93,7 +98,7 @@ class _EditorCompletoPageState extends State<EditorCompletoPage> {
             style = const TextStyle();
         }
 
-        spans.add(TextSpan(text: content, style: style));
+        widgets.add(Text(content!, style: style));
       } else if (match.group(3) != null) {
         final align = match.group(3);
         final url = match.group(4);
@@ -108,146 +113,124 @@ class _EditorCompletoPageState extends State<EditorCompletoPage> {
           default:
             alignment = Alignment.center;
         }
-        spans.add(WidgetSpan(
-          child: Container(
-            alignment: alignment,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Image.network(url!, height: 150),
-          ),
+
+        widgets.add(Container(
+          alignment: alignment,
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: Image.network(url!, height: 150),
         ));
       }
       cursor = match.end;
     }
 
     if (cursor < texto.length) {
-      spans.add(TextSpan(text: texto.substring(cursor)));
+      widgets.add(
+        Text(texto.substring(cursor), style: const TextStyle(fontSize: 16)),
+      );
     }
 
-    return spans;
+    return widgets;
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(title: const Text('Editor com Formatação Parcial')),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey.shade400),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey.shade400),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: RichText(
-                      text: TextSpan(
-                        style: const TextStyle(color: Colors.black, fontSize: 16),
-                        children: parseTextoFormatado(controller.text),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            minHeight: 48,
-                            maxHeight: 96,
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child:
-                                NotificationListener<OverscrollIndicatorNotification>(
-                              onNotification:
-                                  (OverscrollIndicatorNotification overscroll) {
-                                overscroll.disallowIndicator();
-                                return true;
-                              },
-                              child: SingleChildScrollView(
-                                reverse: true,
-                                padding: const EdgeInsets.symmetric(vertical: 8),
-                                child: TextField(
-                                  controller: controller,
-                                  maxLines: null,
-                                  expands: false,
-                                  onChanged: (_) => setState(() {}),
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Digite aqui...'),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.format_bold),
-                        tooltip: 'Negrito',
-                        onPressed: () => aplicarMarcacao('b'),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.format_italic),
-                        tooltip: 'Itálico',
-                        onPressed: () => aplicarMarcacao('i'),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.title),
-                        tooltip: 'Título',
-                        onPressed: () => aplicarMarcacao('h1'),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.image),
-                        tooltip: 'Imagem à esquerda',
-                        onPressed: () => inserirImagem('left'),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.image_rounded),
-                        tooltip: 'Imagem centralizada',
-                        onPressed: () => inserirImagem('center'),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.image_rounded),
-                        tooltip: 'Imagem à direita',
-                        onPressed: () => inserirImagem('right'),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () => debugPrint(controller.text),
-                        icon: const Icon(Icons.send),
-                        label: const Text('Enviar'),
-                      ),
-                    ],
-                  ),
-                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: parseTextoFormatado(controller.text),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: 48,
+                maxHeight: 96,
+              ),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade400),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (overscroll) {
+                    overscroll.disallowIndicator();
+                    return true;
+                  },
+                  child: SingleChildScrollView(
+                    reverse: true,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: TextField(
+                      controller: controller,
+                      maxLines: null,
+                      expands: false,
+                      onChanged: (_) => setState(() {}),
+                      decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Digite aqui...'),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.format_bold),
+                  tooltip: 'Negrito',
+                  onPressed: () => aplicarMarcacao('b'),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.format_italic),
+                  tooltip: 'Itálico',
+                  onPressed: () => aplicarMarcacao('i'),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.title),
+                  tooltip: 'Título',
+                  onPressed: () => aplicarMarcacao('h1'),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.image),
+                  tooltip: 'Imagem à esquerda',
+                  onPressed: () => inserirImagem('left'),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.image_rounded),
+                  tooltip: 'Imagem centralizada',
+                  onPressed: () => inserirImagem('center'),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.image_rounded),
+                  tooltip: 'Imagem à direita',
+                  onPressed: () => inserirImagem('right'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () => debugPrint(controller.text),
+                  icon: const Icon(Icons.send),
+                  label: const Text('Enviar'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
