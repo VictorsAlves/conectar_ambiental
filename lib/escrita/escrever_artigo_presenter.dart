@@ -55,7 +55,7 @@ class EscreverArtigoPresenter extends IPresenter {
     indice.itens.add(newIndiceItem);
 
     await service.atualizarArquivoNoGitHub(
-        novoConteudo: indice.toJson().toString(),
+        novoConteudo: jsonEncode(indice.toJson()),
         caminhoArquivo: 'indice.json',
         commitMessage: 'atualizando indice',
         repo: repo,

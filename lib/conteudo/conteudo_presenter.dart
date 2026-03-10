@@ -1,6 +1,7 @@
 import 'package:conectar_ambiental/interface_view.dart';
-import 'package:conectar_ambiental/conteudo/artigo_model.dart';
 import 'package:conectar_ambiental/core/conteudo_service.dart';
+import 'package:conectar_ambiental/core/model/indice_response.dart';
+import 'package:conectar_ambiental/core/model/postagem_response.dart';
 import 'package:conectar_ambiental/router.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,9 +15,14 @@ class ConteudoPresenter {
     router = ConectarAmbientalRouter(context);
   }
 
-  Future<List<Artigo>> buscarListaConteudo() {
+  Future<IndiceResponse> buscarIndice() {
     final ConteudoService conteudo = ConteudoService();
-    return conteudo.carregarArtigos();
+    return conteudo.obterIndice();
+  }
+
+  Future<PostagemResponse> buscarPostagemPorArquivo(String arquivo) {
+    final ConteudoService conteudo = ConteudoService();
+    return conteudo.obterPostagem(arquivo);
   }
 
   void navigate(int index) {
