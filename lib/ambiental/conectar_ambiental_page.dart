@@ -251,6 +251,14 @@ class _ConectarAmbientalPageState extends State<ConectarAmbientalPage> {
                     : const TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold),),
               ),
+              TextButton(
+                onPressed: () => presenter.navigateToCreatePost(),
+                child:  Text('Criar Conteudo', style: _isScrolled
+                    ?  TextStyle(
+                    color: theme.secondaryHeaderColor, fontWeight: FontWeight.bold)
+                    : const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),),
+              ),
               const SizedBox(width: 20),
             ],
           ),
@@ -395,10 +403,10 @@ class Service {
 }
 
 final List<Service> services = [
-  Service('Licenciamento Ambiental', Icons.assignment_turned_in),
-  Service('Recuperação de Áreas', Icons.nature),
-  Service('Educação Ambiental', Icons.school),
-  Service('Laudos Técnicos', Icons.assessment),
-  Service('Resgate de Fauna', Icons.pets),
-  Service('Consultoria Personalizada', Icons.people),
+  const Service('Licenciamento Ambiental', Icons.assignment_turned_in),
+  const Service('Recuperação de Áreas', Icons.nature),
+  const Service('Educação Ambiental', Icons.school),
+  const Service('Laudos Técnicos', Icons.assessment),
+  const Service('Resgate de Fauna', Icons.pets),
+  const Service('Consultoria Personalizada', Icons.people),
 ];
