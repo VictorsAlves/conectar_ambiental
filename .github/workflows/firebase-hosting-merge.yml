@@ -29,4 +29,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONECTAR_AMBIENTAL }}'
           channelId: live
           projectId: conectar-ambiental
-          entryPoint: ./build/web
+          entryPoint: .
